@@ -1,4 +1,4 @@
-const memory = require('./Memory');
+const memory = require("./Memory");
 const _memory = new memory();
 
 // memory
@@ -33,7 +33,7 @@ class Array {
     const oldPtr = this.ptr;
     this.ptr = _memory.allocate(size);
     if (this.ptr === null) {
-      throw new Error('Out of memory');
+      throw new Error("Out of memory");
     }
     _memory.copy(this.ptr, oldPtr, this.length);
     _memory.free(oldPtr);
@@ -42,7 +42,7 @@ class Array {
 
   pop() {
     if (this.length === 0) {
-      throw new Error('Index error');
+      throw new Error("Index error");
     }
     const value = _memory.get(this.ptr + this.length - 1);
     this.length--;
@@ -62,7 +62,7 @@ class Array {
 
   get(index) {
     if (index < 0 || index >= this.length) {
-      throw new Error('Index error');
+      throw new Error("Index error");
     }
     return _memory.get(this.ptr + index);
   }
@@ -70,7 +70,7 @@ class Array {
 
 function URLify(str) {
   let input = str;
-  let output = input.split(' ').join('%20');
+  let output = input.split(" ").join("%20");
   return output;
 }
 
@@ -156,21 +156,20 @@ function products(array) {
   return newArr;
 }
 
-function rotation(word,rotated) {
-  let arr=[];
-  for (let i = 0; i < word.length-1; i++) {
-    word= word.substring(1)+word.substring(0,1);
+function rotation(word, rotated) {
+  let arr = [];
+  for (let i = 0; i < word.length - 1; i++) {
+    word = word.substring(1) + word.substring(0, 1);
     arr.push(word);
   }
   // console.log('all rotations are: '+arr);
-  const found = arr.find(e=>e===rotated);
-  if(found===rotated){
+  const found = arr.find((e) => e === rotated);
+  if (found === rotated) {
     return true;
-  }else{
+  } else {
     return false;
   }
 }
-
 
 function main() {
   Array.SIZE_RATIO = 3;
@@ -217,7 +216,7 @@ function main() {
 
   // 6. Filtering an array
   let testArray = [1, 3, 5, 10, 11];
-  console.log('Result', arrayFilter(testArray, 5));
+  console.log("Result", arrayFilter(testArray, 5));
   // let testArray = [1, 3, 5, 10, 11];
   // console.log("Result", arrayFilter(testArray, 5));
 
@@ -228,10 +227,10 @@ function main() {
   //8. merge arrays
   let array1 = [1, 3, 6, 8, 11];
   let array2 = [2, 3, 5, 8, 9, 10];
-  console.log('Result', mergeArrays(array1, array2));
+  console.log("Result", mergeArrays(array1, array2));
 
   //9. Remove characters
-  console.log(removeChars('Battle of the Vowels: Hawaii vs. Grozny', 'aeiou'));
+  console.log(removeChars("Battle of the Vowels: Hawaii vs. Grozny", "aeiou"));
 
   //10. Products
   console.log(products([1, 3, 9, 4]));
@@ -242,7 +241,7 @@ function main() {
 
   //11. outputs an array where each index is the product of all the numbers in the array
   console.log(
-    'Result',
+    "Result",
     onesAndZeros([
       [1, 0, 1, 1, 0],
       [0, 1, 1, 1, 0],
@@ -254,35 +253,48 @@ function main() {
 }
 
 //12. String rotation
-console.log(rotation('amazon', 'azonma'));
-console.log(rotation('amazon', 'azonam'));
+console.log(rotation("amazon", "azonma"));
+console.log(rotation("amazon", "azonam"));
 
 function onesAndZeros(array) {
+  const zeroRows = [];
+  const zeroCols = [];
+
   //for each array check the value if it's 0.
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array[i].length; j++) {
-      const val = array[i][j];
-      if (val === 0) {
-        for (let y = 0; y < array[i].length; y++) {
-          if (array[i][y] === 1) {
-            array[i][y] = 20;
-          }
-        }
-
-        for (let z = 0; z < array.length; z++) {
-          if (array[z][j] === 1) {
-            array[z][j] = 20;
-          }
-        }
+      if (array[i][j] === 0) {
+        zeroRows[i] = true;
+        zeroCols[j] = true;
       }
+
+      // const val = array[i][j];
+      // if (val === 0) {
+      //   for (let y = 0; y < array[i].length; y++) {
+      //     if (array[i][y] === 1) {
+      //       array[i][y] = 20;
+      //     }
+      //   }
+
+      //   for (let z = 0; z < array.length; z++) {
+      //     if (array[z][j] === 1) {
+      //       array[z][j] = 20;
+      //     }
+      //   }
+      // }
     }
   }
+  console.log("TESTING", zeroRows);
+  console.log("TESTING", zeroCols);
 
   for (let i = 0; i < array.length; i++) {
     for (let j = 0; j < array[i].length; j++) {
-      if (array[i][j] === 20) {
+      if (zeroRows[i] === true || zeroCols[j] === true) {
         array[i][j] = 0;
       }
+      // if (array[i][j] === 20) {
+      //   array[i][j] = 0;
+      // }
     }
   }
 
