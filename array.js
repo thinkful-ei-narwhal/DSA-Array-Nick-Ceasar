@@ -68,6 +68,12 @@ class Array {
   }
 }
 
+function URLify(str){
+  let  input=str;
+  let output=input.split(' ').join('%20');
+  return output;
+}
+
 function main() {
   Array.SIZE_RATIO = 3;
 
@@ -106,6 +112,11 @@ function main() {
   //the length increases because an item was added but the capacity and memory stay the same because no rezise was needed
   // tauhida cant be printed because it is a string and memory only takes floats
   // the purpuse of resize is to increase the capacity acordingly of the array before anything gets push
+
+
+  // 5. URLify a string
+  console.log(URLify('tauhida parveen'));
+  console.log(URLify('www.thinkful.com /tauh ida parv een'));
 }
 
 main();
