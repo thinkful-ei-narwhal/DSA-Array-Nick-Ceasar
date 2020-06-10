@@ -1,4 +1,4 @@
-const memory = require("./Memory");
+const memory = require('./Memory');
 const _memory = new memory();
 
 // memory
@@ -33,7 +33,7 @@ class Array {
     const oldPtr = this.ptr;
     this.ptr = _memory.allocate(size);
     if (this.ptr === null) {
-      throw new Error("Out of memory");
+      throw new Error('Out of memory');
     }
     _memory.copy(this.ptr, oldPtr, this.length);
     _memory.free(oldPtr);
@@ -42,7 +42,7 @@ class Array {
 
   pop() {
     if (this.length === 0) {
-      throw new Error("Index error");
+      throw new Error('Index error');
     }
     const value = _memory.get(this.ptr + this.length - 1);
     this.length--;
@@ -58,6 +58,13 @@ class Array {
     _memory.copy(location + 1, location, this.length - index);
     _memory.set(location, value);
     this.length++;
+  }
+
+  get(index) {
+    if (index < 0 || index >= this.length) {
+      throw new Error('Index error');
+    }
+    return _memory.get(this.ptr + index);
   }
 }
 
@@ -79,26 +86,26 @@ function main() {
   console.log(arr);
   //question answers:
   //1 pushes: length = 1 | capacity = 3 | mem address = 0
-  //6 pushes: length = 6 | capacity = 6 | mem address = 3
+  //6 pushes: length = 6 | capacity = 12 | mem address = 3
 
   arr.pop();
   arr.pop();
   arr.pop();
   console.log(arr);
   //question answers:
-  // 3 pops: length = 3 | capacity = 6 | mem address = 3
+  // 3 pops: length = 3 | capacity = 12 | mem address = 3
 
   console.log(arr[0]);
-  //empty
-  for (let i = 0; i < arr.length; i++) {
-    arr[i] = null;
-  }
-  arr.push("tauhida");
-  arr.push("Doubletauhida");
-  console.log(arr.length);
-  console.log(arr._capacity);
+  console.log(arr.get(0));
+  //question answers:
+  // that function doesnt exist its suppost to be .get()
 
-  console.log("testing ", arr);
+  arr.push('tauhida');
+  console.log('testing ', arr);
+  //question answers:
+  //the length increases because an item was added but the capacity and memory stay the same because no rezise was needed
+  // tauhida cant be printed because it is a string and memory only takes floats
+  // the purpuse of resize is to increase the capacity acordingly of the array before anything gets push
 }
 
 main();
