@@ -1,4 +1,4 @@
-const memory = require('./Memory');
+const memory = require("./Memory");
 const _memory = new memory();
 
 // memory
@@ -33,7 +33,7 @@ class Array {
     const oldPtr = this.ptr;
     this.ptr = _memory.allocate(size);
     if (this.ptr === null) {
-      throw new Error('Out of memory');
+      throw new Error("Out of memory");
     }
     _memory.copy(this.ptr, oldPtr, this.length);
     _memory.free(oldPtr);
@@ -42,7 +42,7 @@ class Array {
 
   pop() {
     if (this.length === 0) {
-      throw new Error('Index error');
+      throw new Error("Index error");
     }
     const value = _memory.get(this.ptr + this.length - 1);
     this.length--;
@@ -62,16 +62,31 @@ class Array {
 
   get(index) {
     if (index < 0 || index >= this.length) {
-      throw new Error('Index error');
+      throw new Error("Index error");
     }
     return _memory.get(this.ptr + index);
   }
 }
 
-function URLify(str){
-  let  input=str;
-  let output=input.split(' ').join('%20');
+function URLify(str) {
+  let input = str;
+  let output = input.split(" ").join("%20");
   return output;
+}
+
+function arrayFilter(array, lessThan) {
+  if (array.length < 1) {
+    return [];
+  }
+
+  const val = array.pop();
+  if (val < lessThan) {
+    let returnedArr = arrayFilter(array, lessThan);
+    returnedArr.push(val);
+    return returnedArr;
+  } else {
+    return arrayFilter(array, lessThan);
+  }
 }
 
 function main() {
@@ -81,42 +96,45 @@ function main() {
   let arr = new Array();
 
   // Add an item to the array
-  arr.push(3);
-  console.log(arr);
-  arr.push(5);
-  arr.push(15);
-  arr.push(19);
-  arr.push(45);
-  arr.push(10);
+  // arr.push(3);
+  // console.log(arr);
+  // arr.push(5);
+  // arr.push(15);
+  // arr.push(19);
+  // arr.push(45);
+  // arr.push(10);
 
-  console.log(arr);
+  // console.log(arr);
   //question answers:
   //1 pushes: length = 1 | capacity = 3 | mem address = 0
   //6 pushes: length = 6 | capacity = 12 | mem address = 3
 
-  arr.pop();
-  arr.pop();
-  arr.pop();
-  console.log(arr);
+  // arr.pop();
+  // arr.pop();
+  // arr.pop();
+  // console.log(arr);
   //question answers:
   // 3 pops: length = 3 | capacity = 12 | mem address = 3
 
-  console.log(arr[0]);
-  console.log(arr.get(0));
+  // console.log(arr[0]);
+  // console.log(arr.get(0));
   //question answers:
   // that function doesnt exist its suppost to be .get()
 
-  arr.push('tauhida');
-  console.log('testing ', arr);
+  // arr.push("tauhida");
+  // console.log("testing ", arr);
   //question answers:
   //the length increases because an item was added but the capacity and memory stay the same because no rezise was needed
   // tauhida cant be printed because it is a string and memory only takes floats
   // the purpuse of resize is to increase the capacity acordingly of the array before anything gets push
 
-
   // 5. URLify a string
-  console.log(URLify('tauhida parveen'));
-  console.log(URLify('www.thinkful.com /tauh ida parv een'));
+  // console.log(URLify("tauhida parveen"));
+  // console.log(URLify("www.thinkful.com /tauh ida parv een"));
+
+  // 6. Filtering an array
+  let testArray = [1, 3, 5, 10, 11];
+  console.log("Result", arrayFilter(testArray, 5));
 }
 
 main();
