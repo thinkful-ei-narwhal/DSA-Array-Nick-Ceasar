@@ -38,6 +38,15 @@ class Array {
     _memory.free(oldPtr);
     this._capacity = size;
   }
+
+  pop(){
+    if(this.length===0){
+      throw new Error('Index error');
+    }
+    const value= _memory.get(this.ptr + this.length);
+    this.length--;
+    return value; 
+  }
 }
 
 function main() {
@@ -48,18 +57,24 @@ function main() {
 
   // Add an item to the array
   arr.push(3);
+  console.log(arr);
   arr.push(5);
   arr.push(15);
   arr.push(19);
   arr.push(45);
   arr.push(10);
-  arr.push(10);
 
   console.log(arr);
-
   //question answers:
-  //1 pushes: length = 1 | capacity = 3 | mem address = 3
-  //6 pushes: length = 6 | capacity = 9 | mem address = 3
+  //1 pushes: length = 1 | capacity = 3 | mem address = 0
+  //6 pushes: length = 6 | capacity = 6 | mem address = 3
+
+  arr.pop();
+  arr.pop();
+  arr.pop();
+  console.log(arr);
+  //question answers:
+  // 3 pops: length = 3 | capacity = 6 | mem address = 3 
 }
 
 main();
