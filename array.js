@@ -89,17 +89,43 @@ function arrayFilter(array, lessThan) {
   }
 }
 
-function maxSum(array,current,sum, max){
-  if(current>=array.length-1){
+function maxSum(array, current, sum, max) {
+  if (current >= array.length - 1) {
     return max;
   }
 
-  sum+=array[current];
-  if(sum>max){
-    max=sum;
+  sum += array[current];
+  if (sum > max) {
+    max = sum;
   }
   current++;
-  return maxSum(array,current,sum,max);
+  return maxSum(array, current, sum, max);
+}
+
+function mergeArrays(array1, array2) {
+  if (array1.length === 0 && array2.length === 0) {
+    return [];
+  }
+
+  let a1 = array1.shift();
+  let a2 = array2.shift();
+
+  const mergedBoi = mergeArrays(array1, array2);
+  if (!a1) {
+    mergedBoi.unshift(a2);
+  } else if (!a2) {
+    mergedBoi.unshift(a1);
+  } else if (a1 > a2) {
+    mergedBoi.unshift(a1);
+    mergedBoi.unshift(a2);
+  } else if (a1 < a2) {
+    mergedBoi.unshift(a2);
+    mergedBoi.unshift(a1);
+  } else {
+    mergedBoi.unshift(a1);
+    mergedBoi.unshift(a2);
+  }
+  return mergedBoi;
 }
 
 function main() {
@@ -149,7 +175,12 @@ function main() {
   let testArray = [1, 3, 5, 10, 11];
   console.log("Result", arrayFilter(testArray, 5));
 
-  console.log(maxSum([4, 6, -3, 5, -2, 1],0,0,0));
-}
+  console.log(maxSum([4, 6, -3, 5, -2, 1], 0, 0, 0));
+  // let testArray = [1, 3, 5, 10, 11];
+  // console.log("Result", arrayFilter(testArray, 5));
 
-main();
+  //8. merge arrays
+  let array1 = [1, 3, 6, 8, 11];
+  let array2 = [2, 3, 5, 8, 9, 10];
+  console.log("Result", mergeArrays(array1, array2));
+}
