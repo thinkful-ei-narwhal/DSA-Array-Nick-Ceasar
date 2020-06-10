@@ -13,19 +13,20 @@ class Array {
     this.ptr = _memory.allocate(this.length);
   }
 
-  //array ptr = starting block
+  //Note: array ptr = starting block
   //if you want to to something in its index,
   //you add array ptr + index
 
   push(value) {
     //allocate memory if needed
     if (this.length >= this._capacity) {
-      console.log("length ", this.length);
+      //Note: only INCREASES by 3 due to pemdas, I think this
+      //is just a constraint of the practice since max is 1024
+      //Normally I think reallocation should be larger
       this.resize(this.length + 1 * Array.SIZE_RATIO);
     }
     _memory.set(this.ptr + this.length, value);
     this.length++;
-    console.log("capacity ", this._capacity);
   }
 
   resize(size) {
@@ -39,13 +40,13 @@ class Array {
     this._capacity = size;
   }
 
-  pop(){
-    if(this.length===0){
-      throw new Error('Index error');
+  pop() {
+    if (this.length === 0) {
+      throw new Error("Index error");
     }
-    const value= _memory.get(this.ptr + this.length);
+    const value = _memory.get(this.ptr + this.length - 1);
     this.length--;
-    return value; 
+    return value;
   }
 }
 
@@ -74,7 +75,19 @@ function main() {
   arr.pop();
   console.log(arr);
   //question answers:
-  // 3 pops: length = 3 | capacity = 6 | mem address = 3 
+  // 3 pops: length = 3 | capacity = 6 | mem address = 3
+
+  console.log(arr[0]);
+  //empty
+  for (let i = 0; i < arr.length; i++) {
+    arr[i] = null;
+  }
+  arr.push("tauhida");
+  arr.push("Doubletauhida");
+  console.log(arr.length);
+  console.log(arr._capacity);
+
+  console.log("testing ", arr);
 }
 
 main();
