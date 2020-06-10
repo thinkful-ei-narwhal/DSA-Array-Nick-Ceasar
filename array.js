@@ -1,4 +1,4 @@
-const memory = require('./Memory');
+const memory = require("./Memory");
 const _memory = new memory();
 
 // memory
@@ -33,7 +33,7 @@ class Array {
     const oldPtr = this.ptr;
     this.ptr = _memory.allocate(size);
     if (this.ptr === null) {
-      throw new Error('Out of memory');
+      throw new Error("Out of memory");
     }
     _memory.copy(this.ptr, oldPtr, this.length);
     _memory.free(oldPtr);
@@ -42,7 +42,7 @@ class Array {
 
   pop() {
     if (this.length === 0) {
-      throw new Error('Index error');
+      throw new Error("Index error");
     }
     const value = _memory.get(this.ptr + this.length - 1);
     this.length--;
@@ -62,7 +62,7 @@ class Array {
 
   get(index) {
     if (index < 0 || index >= this.length) {
-      throw new Error('Index error');
+      throw new Error("Index error");
     }
     return _memory.get(this.ptr + index);
   }
@@ -70,7 +70,7 @@ class Array {
 
 function URLify(str) {
   let input = str;
-  let output = input.split(' ').join('%20');
+  let output = input.split(" ").join("%20");
   return output;
 }
 
@@ -128,13 +128,13 @@ function mergeArrays(array1, array2) {
   return mergedBoi;
 }
 
-function removeChars(str,filter) {
-  for(let i =0;i<str.length;i++){
-    for(let j =0;j<filter.length;j++){
-      if(str.charAt(i)===filter.charAt(j)){
-        let beforeCut=str.substring(0,i);
-        let leftOver=str.substring(i+1,str.length);
-        str= beforeCut+leftOver;
+function removeChars(str, filter) {
+  for (let i = 0; i < str.length; i++) {
+    for (let j = 0; j < filter.length; j++) {
+      if (str.charAt(i) === filter.charAt(j)) {
+        let beforeCut = str.substring(0, i);
+        let leftOver = str.substring(i + 1, str.length);
+        str = beforeCut + leftOver;
       }
     }
   }
@@ -142,16 +142,16 @@ function removeChars(str,filter) {
 }
 
 function products(array) {
-  let newArr=[];
-  let sum=1;
-  for(let i =0;i<array.length;i++){
-    for(let j =0;j<array.length;j++){
-      if(i!== j){
+  let newArr = [];
+  let sum = 1;
+  for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j < array.length; j++) {
+      if (i !== j) {
         sum *= array[j];
       }
     }
     newArr.push(sum);
-    sum=1;
+    sum = 1;
   }
   return newArr;
 }
@@ -201,23 +201,72 @@ function main() {
 
   // 6. Filtering an array
   let testArray = [1, 3, 5, 10, 11];
-  console.log('Result', arrayFilter(testArray, 5));
+  console.log("Result", arrayFilter(testArray, 5));
+  // let testArray = [1, 3, 5, 10, 11];
+  // console.log("Result", arrayFilter(testArray, 5));
 
-  console.log(maxSum([4, 6, -3, 5, -2, 1], 0, 0, 0));
+  // console.log(maxSum([4, 6, -3, 5, -2, 1], 0, 0, 0));
   // let testArray = [1, 3, 5, 10, 11];
   // console.log("Result", arrayFilter(testArray, 5));
 
   //8. merge arrays
   let array1 = [1, 3, 6, 8, 11];
   let array2 = [2, 3, 5, 8, 9, 10];
-  console.log('Result', mergeArrays(array1, array2));
+  console.log("Result", mergeArrays(array1, array2));
 
   //9. Remove characters
-  console.log(removeChars('Battle of the Vowels: Hawaii vs. Grozny','aeiou'));
+  console.log(removeChars("Battle of the Vowels: Hawaii vs. Grozny", "aeiou"));
 
   //10. Products
   console.log(products([1, 3, 9, 4]));
 
+  // let array1 = [1, 3, 6, 8, 11];
+  // let array2 = [2, 3, 5, 8, 9, 10];
+  // console.log("Result", mergeArrays(array1, array2));
+
+  //11. outputs an array where each index is the product of all the numbers in the array
+  console.log(
+    "Result",
+    onesAndZeros([
+      [1, 0, 1, 1, 0],
+      [0, 1, 1, 1, 0],
+      [1, 1, 1, 1, 1],
+      [1, 0, 1, 1, 1],
+      [1, 1, 1, 1, 1],
+    ])
+  );
+}
+
+function onesAndZeros(array) {
+  //for each array check the value if it's 0.
+  for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j < array[i].length; j++) {
+      const val = array[i][j];
+      if (val === 0) {
+        for (let y = 0; y < array[i].length; y++) {
+          if (array[i][y] === 1) {
+            array[i][y] = 20;
+          }
+        }
+
+        for (let z = 0; z < array.length; z++) {
+          if (array[z][j] === 1) {
+            array[z][j] = 20;
+          }
+        }
+      }
+    }
+  }
+
+  for (let i = 0; i < array.length; i++) {
+    for (let j = 0; j < array[i].length; j++) {
+      if (array[i][j] === 20) {
+        array[i][j] = 0;
+      }
+    }
+  }
+
+  return array;
 }
 
 main();
