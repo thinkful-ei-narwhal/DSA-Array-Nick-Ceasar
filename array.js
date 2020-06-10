@@ -162,7 +162,7 @@ function rotation(word,rotated) {
     word= word.substring(1)+word.substring(0,1);
     arr.push(word);
   }
-  // console.log(arr);
+  // console.log('all rotations are: '+arr);
   const found = arr.find(e=>e===rotated);
   if(found===rotated){
     return true;
