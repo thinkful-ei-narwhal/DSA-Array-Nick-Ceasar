@@ -89,6 +89,19 @@ function arrayFilter(array, lessThan) {
   }
 }
 
+function maxSum(array,current,sum, max){
+  if(current>=array.length-1){
+    return max;
+  }
+
+  sum+=array[current];
+  if(sum>max){
+    max=sum;
+  }
+  current++;
+  return maxSum(array,current,sum,max);
+}
+
 function main() {
   Array.SIZE_RATIO = 3;
 
@@ -135,6 +148,8 @@ function main() {
   // 6. Filtering an array
   let testArray = [1, 3, 5, 10, 11];
   console.log("Result", arrayFilter(testArray, 5));
+
+  console.log(maxSum([4, 6, -3, 5, -2, 1],0,0,0));
 }
 
 main();
