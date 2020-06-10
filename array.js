@@ -184,3 +184,5 @@ function main() {
   let array2 = [2, 3, 5, 8, 9, 10];
   console.log("Result", mergeArrays(array1, array2));
 }
+
+main();
