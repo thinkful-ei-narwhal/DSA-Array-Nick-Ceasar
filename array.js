@@ -1,4 +1,4 @@
-const memory = require("./Memory");
+const memory = require('./Memory');
 const _memory = new memory();
 
 // memory
@@ -33,7 +33,7 @@ class Array {
     const oldPtr = this.ptr;
     this.ptr = _memory.allocate(size);
     if (this.ptr === null) {
-      throw new Error("Out of memory");
+      throw new Error('Out of memory');
     }
     _memory.copy(this.ptr, oldPtr, this.length);
     _memory.free(oldPtr);
@@ -42,7 +42,7 @@ class Array {
 
   pop() {
     if (this.length === 0) {
-      throw new Error("Index error");
+      throw new Error('Index error');
     }
     const value = _memory.get(this.ptr + this.length - 1);
     this.length--;
@@ -62,7 +62,7 @@ class Array {
 
   get(index) {
     if (index < 0 || index >= this.length) {
-      throw new Error("Index error");
+      throw new Error('Index error');
     }
     return _memory.get(this.ptr + index);
   }
@@ -70,7 +70,7 @@ class Array {
 
 function URLify(str) {
   let input = str;
-  let output = input.split(" ").join("%20");
+  let output = input.split(' ').join('%20');
   return output;
 }
 
@@ -128,6 +128,19 @@ function mergeArrays(array1, array2) {
   return mergedBoi;
 }
 
+function removeChars(str,filter) {
+  for(let i =0;i<str.length;i++){
+    for(let j =0;j<filter.length;j++){
+      if(str.charAt(i)===filter.charAt(j)){
+        let beforeCut=str.substring(0,i);
+        let leftOver=str.substring(i+1,str.length);
+        str= beforeCut+leftOver;
+      }
+    }
+  }
+  return str;
+}
+
 function main() {
   Array.SIZE_RATIO = 3;
 
@@ -173,7 +186,7 @@ function main() {
 
   // 6. Filtering an array
   let testArray = [1, 3, 5, 10, 11];
-  console.log("Result", arrayFilter(testArray, 5));
+  console.log('Result', arrayFilter(testArray, 5));
 
   console.log(maxSum([4, 6, -3, 5, -2, 1], 0, 0, 0));
   // let testArray = [1, 3, 5, 10, 11];
@@ -182,7 +195,11 @@ function main() {
   //8. merge arrays
   let array1 = [1, 3, 6, 8, 11];
   let array2 = [2, 3, 5, 8, 9, 10];
-  console.log("Result", mergeArrays(array1, array2));
+  console.log('Result', mergeArrays(array1, array2));
+
+  //9. Remove characters
+  console.log(removeChars('Battle of the Vowels: Hawaii vs. Grozny','aeiou'));
+
 }
 
 main();
