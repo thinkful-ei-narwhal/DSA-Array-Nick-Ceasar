@@ -48,6 +48,17 @@ class Array {
     this.length--;
     return value;
   }
+
+  insert(index, value) {
+    if (this.length >= this._capacity) {
+      this.resize(this.length + 1 * Array.SIZE_RATIO);
+    }
+
+    const location = this.ptr + index;
+    _memory.copy(location + 1, location, this.length - index);
+    _memory.set(location, value);
+    this.length++;
+  }
 }
 
 function main() {
