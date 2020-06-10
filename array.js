@@ -23,7 +23,7 @@ class Array {
       //Note: only INCREASES by 3 due to pemdas, I think this
       //is just a constraint of the practice since max is 1024
       //Normally I think reallocation should be larger
-      this.resize(this.length + 1 * Array.SIZE_RATIO);
+      this.resize((this.length + 1) * Array.SIZE_RATIO);
     }
     _memory.set(this.ptr + this.length, value);
     this.length++;
