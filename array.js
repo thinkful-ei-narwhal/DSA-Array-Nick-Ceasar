@@ -141,6 +141,21 @@ function removeChars(str,filter) {
   return str;
 }
 
+function products(array) {
+  let newArr=[];
+  let sum=1;
+  for(let i =0;i<array.length;i++){
+    for(let j =0;j<array.length;j++){
+      if(i!== j){
+        sum *= array[j];
+      }
+    }
+    newArr.push(sum);
+    sum=1;
+  }
+  return newArr;
+}
+
 function main() {
   Array.SIZE_RATIO = 3;
 
@@ -199,6 +214,9 @@ function main() {
 
   //9. Remove characters
   console.log(removeChars('Battle of the Vowels: Hawaii vs. Grozny','aeiou'));
+
+  //10. Products
+  console.log(products([1, 3, 9, 4]));
 
 }
 
